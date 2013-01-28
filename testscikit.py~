@@ -1,7 +1,7 @@
 from numpy import *
 from root_numpy import *
 
-# used to shuffle multiple arrays at once
+
 def shuffle_in_unison(a, b, c):
     assert len(a) == len(b)
     shuffled_a = empty(a.shape, dtype=a.dtype)
@@ -14,7 +14,6 @@ def shuffle_in_unison(a, b, c):
         shuffled_c[new_index] = c[old_index]
     return shuffled_a, shuffled_b, shuffled_c
 
-# return a part of the array
 def cutTree(arr, training, pos):
     lenarr = len(arr)
     if pos > lenarr:
@@ -26,7 +25,6 @@ def cutTree(arr, training, pos):
         print 'false'
         return arr[lenarr-pos:]
 
-# take out only the variables we want to train on
 def cutCols(arr, varIdx, rows, cols):
     rowcount = 0
     outarr = ones((int(rows),int(cols)))
@@ -50,14 +48,13 @@ def zerosInt(length):
         arr.append(0)
     return arr
 
-# set the weights for training
 def setWeights(length, weight):
     weights = []
     for i in xrange(0,length):
         weights.append(weight)
     return weights
 
-# convert to numpy arrays, then randomise
+
 sig = root2array('BonnTMVATrainingSample_ZH125.root','TrainTree')
 random.shuffle(sig)
 bkg = root2array('BonnTMVATrainingSample_ttbar.root','TrainTree')
@@ -77,7 +74,6 @@ foundVariables = []
 
 xcount = 0
 
-#store the variables we find and their indices
 for x in sig.dtype.names:
     if x in variableNames:
         varIdx.append(xcount)
@@ -87,7 +83,6 @@ for x in sig.dtype.names:
 print sig.dtype.names
 print varIdx
 print foundVariables
-#create the training trees/ arrays
 sigTrain = cutCols(sigtemp, varIdx, len(sigtemp), len(variableNames))
 bkgTrain = cutCols(bkgtemp, varIdx, len(bkgtemp), len(variableNames))
 
